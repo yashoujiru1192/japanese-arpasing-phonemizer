@@ -1,0 +1,60 @@
+name: Build phonemizer DLL
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: plugin
+
+      - name: Checkout OpenUtau 0.1.568 source
+        uses: actions/checkout@v4
+        with:
+          repository: openutau/OpenUtau
+          ref: 0.1.568
+          path: OpenUtau
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Build DLL
+        shell: pwsh
+        run: |
+          dotnet build "$env:GITHUB_WORKSPACE/plugin/src/JapaneseArpasingPhonemizer.csproj" `
+            --configuration Release `
+            -p:OpenUtauRoot="$env:GITHUB_WORKSPACE/OpenUtau"
+
+      - name: Create installation ZIP
+        shell: pwsh
+        run: |
+          $output = "$env:GITHUB_WORKSPACE/plugin/src/bin/Release/net8.0/JapaneseArpasingPhonemizer.dll"
+          if (-not (Test-Path -LiteralPath $output)) {
+            throw "Built DLL was not found: $output"
+          }
+          $package = "$env:GITHUB_WORKSPACE/package"
+          New-Item -ItemType Directory -Force -Path $package | Out-Null
+          Copy-Item -LiteralPath $output -Destination $package
+          Copy-Item -LiteralPath "$env:GITHUB_WORKSPACE/plugin/INSTALL_JA.txt" -Destination $package
+          Compress-Archive -Path "$package/*" `
+            -DestinationPath "$env:GITHUB_WORKSPACE/Japanese-ARPAsing-Phonemizer-v0.1.0.zip" `
+            -Force
+
+      - name: Upload DLL package
+        uses: actions/upload-artifact@v4
+        with:
+          name: Japanese-ARPAsing-Phonemizer-v0.1.0
+          path: Japanese-ARPAsing-Phonemizer-v0.1.0.zip
+          if-no-files-found: error
