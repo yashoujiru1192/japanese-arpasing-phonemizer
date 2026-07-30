@@ -1,0 +1,22 @@
+﻿Japanese ARPAsing Phonemizer v0.1.0
+OpenUtau v0.1.568.0 向け
+
+【インストール】
+1. JapaneseArpasingPhonemizer.dllを、起動中のOpenUtau画面へドラッグ＆ドロップします。
+2. 確認画面が出た場合はインストールを許可します。
+3. OpenUtauを再起動します。
+4. トラックのPhonemizerから
+   [JA ARPA] Japanese ARPAsing Phonemizer
+   を選択します。
+
+ドラッグ＆ドロップで入らない場合:
+OpenUtauのデータフォルダにあるPluginsフォルダへDLLをコピーし、再起動してください。
+
+【入力】
+一音符に一モーラずつ、ひらがな又はカタカナを入力してください。
+例: こ｜ん｜に｜ち｜わ
+
+【注意】
+・漢字には対応していません。
+・轟音ロキ ARPAsing Liteを基準に初期調整しています。
+・問題が起きた場合はPluginsフォルダからDLLを削除すると元に戻せます。

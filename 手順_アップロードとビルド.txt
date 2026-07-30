@@ -1,0 +1,14 @@
+﻿GitHubへのアップロード手順
+
+1. このZIPを右クリックし、「すべて展開」します。
+2. GitHubの japanese-arpasing-phonemizer リポジトリを開きます。
+3. 「Add file」→「Upload files」を押します。
+4. 展開したフォルダの中身をすべてドラッグします。
+   対象: .github フォルダ、src フォルダ、tools フォルダ、README.md、INSTALL_JA.txt、LICENSE
+5. 画面下の「Commit changes」を押します。
+6. 1～数分後に「Actions」タブを開きます。
+7. 「Build phonemizer DLL」の実行結果を開きます。
+8. 下部のArtifactsから「Japanese-ARPAsing-Phonemizer-v0.1.0」をダウンロードします。
+
+.githubフォルダが見えない場合:
+エクスプローラー上部の「表示」→「表示」→「隠しファイル」をオンにしてください。
